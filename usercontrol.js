@@ -8,23 +8,59 @@ const staffregistration = (req, res) => {
       password: req.body.password,
       contactno: req.body.contactno,
     });
-    newUser
-      .save()
-      .then((data) => {
-        res.json({
-          status: 200,
-          msg: "insert successfully",
-          result: data,
-        });
-      })
-      .catch((err) => {
+};
+
+const resetpassword = (req, res) => {
+  Usermodel.updateOne({ email: req.body.email, password: req.body.password })
+    .exec()
+    .then((data) => {
+      res.json({
+        status: 200,
+        msg: "Password Update Successfully",
+        result: data,
+      });
+    })
+    .catch((err) => {
+      res.json({
+        status: 500,
+        msg: "Server error",
+        error: err,
+      });
+    });
+};
+
+const stafflogin = (req, res) => {
+  Usermodel.findOne({ email: req.body.email})
+    .exec()
+    .then((data) => {
+      if (data) {
+        if (req.body.password === data.password) {
+          res.json({
+            status: 200,
+            msg: "Login Successfully",
+            result: data,
+          });
+        } else {
+          res.json({
+            status: 500,
+            msg: "Invalid Password",
+          });
+        }
+      } else {
         res.json({
           status: 500,
-          msg: "not inserted",
-          error: err,
+          msg: "Invalid User Id",
         });
+      }
+    })
+    .catch((err) => {
+      res.json({
+        status: 500,
+        msg: "Server error",
+        error: err,
       });
-  };
+    });
+};
 
   const customerlogin = (req, res) => {
     Usermodel.findOne({ email: req.body.email }).exec()
@@ -58,4 +94,4 @@ const staffregistration = (req, res) => {
         })
 }
 
-  module.exports = {staffregistration,customerlogin};
+  module.exports = {staffregistration,customerlogin,stafflogin,resetpassword};
