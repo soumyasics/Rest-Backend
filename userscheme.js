@@ -20,7 +20,6 @@ const userscheme=mongoose.Schema({
         type:String,
         required:true
     },
-  
     contactno:{
         type:Number,
         required:true
