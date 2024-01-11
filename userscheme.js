@@ -20,10 +20,6 @@ const userscheme=mongoose.Schema({
         type:String,
         required:true
     },
-    confirmpassword:{
-        type:String,
-        required:true
-    },
     contactno:{
         type:Number,
         required:true
