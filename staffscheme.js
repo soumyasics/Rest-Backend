@@ -1,5 +1,5 @@
 const mongoose=require("mongoose")
-const userscheme=mongoose.Schema({
+const staffscheme=mongoose.Schema({
     fname:{
         type:String,
         required:true
@@ -24,9 +24,18 @@ const userscheme=mongoose.Schema({
         type:String,
         required:true
     },
+    salary:{
+        type:Number,
+        required:true
+    },
     contactno:{
         type:Number,
         required:true
-    }
+    },
+    designation:{
+        type:String,
+        required:true
+    },
 })
-module.exports=mongoose.model("newusers",userscheme)
+
+module.exports=mongoose.model("newstaffs",staffscheme)
