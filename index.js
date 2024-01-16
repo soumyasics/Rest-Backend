@@ -1,8 +1,9 @@
 const express = require("express");
 const db = require("./DBconnection");
+const app = express();
+app.use(express.static(`${__dirname}/upload`));
 const cors=require("cors")
 const route=require("./route")
-const app = express();
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());

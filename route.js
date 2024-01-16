@@ -9,7 +9,8 @@ router.post('/userlogin',usercontrol.userlogin)
 router.post('/staffregistration',staffcontrol.staffregistration)
 router.post('/stafflogin',staffcontrol.stafflogin)
 router.post('/staffresetpassword',staffcontrol.staffresetpassword)
-router.post('/addfood',foodcontrol.addfood)
+router.post('/addfood',foodcontrol.upload,foodcontrol.addfood)
 router.get('/viewfood',foodcontrol.viewfood)
+router.post('/deletefood',foodcontrol.deletefood)
 
 module.exports=router
