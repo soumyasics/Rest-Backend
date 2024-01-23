@@ -77,4 +77,4 @@ const deletefood = (req, res) => {
     });
 };
 
-module.exports = { addfood, viewfood, upload, deletefood };
+module.exports = { addfood, viewfood, upload, deletefood,};
