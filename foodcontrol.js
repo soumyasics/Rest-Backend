@@ -77,4 +77,25 @@ const deletefood = (req, res) => {
     });
 };
 
-module.exports = { addfood, viewfood, upload, deletefood };
+
+const foodedit = (req, res) => {
+  foodmodel
+    .find()
+    .exec()
+    .then((data) => {
+      res.json({
+        status: 200,
+        msg: "updated Successfully",
+        result: data,
+      });
+    })
+    .catch((err) => {
+      res.json({
+        status: 500,
+        msg: "Not Viewed",
+        error: err,
+      });
+    });
+};
+
+module.exports = { addfood, viewfood, upload, deletefood,foodedit };

@@ -12,5 +12,6 @@ router.post('/staffresetpassword',staffcontrol.staffresetpassword)
 router.post('/addfood',foodcontrol.upload,foodcontrol.addfood)
 router.get('/viewfood',foodcontrol.viewfood)
 router.post('/deletefood',foodcontrol.deletefood)
+router.post('/foodedit',foodcontrol.foodedit)
 
 module.exports=router
