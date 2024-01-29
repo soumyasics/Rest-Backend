@@ -1,4 +1,4 @@
-const ordermodel = require("./orderschema");
+const ordermodel = require("./orderscheme");
 
 const addorder = (req, res) => {
   req.body.state.map((x) => {
@@ -16,7 +16,7 @@ const addorder = (req, res) => {
       .then((data) => {
         res.json({
           status: 200,
-          msg: "Ordered Successfully",
+          msg: "Added Successfully",
           result: data,
         });
       })
@@ -28,6 +28,7 @@ const addorder = (req, res) => {
         });
       });
   });
+  // console.log(req.body.state);
 };
 
 module.exports = { addorder };
