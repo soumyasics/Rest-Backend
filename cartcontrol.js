@@ -48,19 +48,19 @@ const viewcart = (req, res) => {
 
 const deletecartitem = (req, res) => {
   cartmodel
-    .find({id: req.params.id})
+    .deleteOne({ id: req.body.id })
     .exec()
     .then((data) => {
       res.json({
         status: 200,
-        msg: "Deleted Successfully",
+        msg: "Data Deleted",
         result: data,
       });
     })
     .catch((err) => {
       res.json({
         status: 500,
-        msg: "Not Deleted",
+        msg: "Server error",
         error: err,
       });
     });
