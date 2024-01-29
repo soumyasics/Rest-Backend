@@ -14,6 +14,7 @@ router.post('/addfood',foodcontrol.upload,foodcontrol.addfood)
 router.get('/viewfood',foodcontrol.viewfood)
 router.post('/deletefood',foodcontrol.deletefood)
 router.post('/addcart/:foodid',cartcontrol.addcart)
-router.get('/viewcart',cartcontrol.viewcart)
+router.get('/viewcart/:userid',cartcontrol.viewcart)
+router.post('/deletecartitem/:id',cartcontrol.deletecartitem)
 
 module.exports=router

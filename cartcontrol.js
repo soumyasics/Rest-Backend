@@ -28,7 +28,7 @@ const addcart = (req, res) => {
 
 const viewcart = (req, res) => {
   cartmodel
-    .find()
+    .find({userid: req.params.userid}).populate("foodid")
     .exec()
     .then((data) => {
       res.json({
@@ -46,4 +46,24 @@ const viewcart = (req, res) => {
     });
 };
 
-module.exports = { addcart,viewcart };
+const deletecartitem = (req, res) => {
+  cartmodel
+    .find({id: req.params.id})
+    .exec()
+    .then((data) => {
+      res.json({
+        status: 200,
+        msg: "Deleted Successfully",
+        result: data,
+      });
+    })
+    .catch((err) => {
+      res.json({
+        status: 500,
+        msg: "Not Deleted",
+        error: err,
+      });
+    });
+};
+
+module.exports = { addcart,viewcart,deletecartitem };
