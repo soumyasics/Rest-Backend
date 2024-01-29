@@ -1,13 +1,14 @@
 const order=require("./Orderschema")
 
 const addorder = (req, res) => {
+    req.body.state.map((x)=>{
     const date = new Date();
     const neworder = new order({
-      foodid: req.params.foodid,
-      userid: req.body.userid,
-      count: req.body.count,
-      paymentstatus:req.body.paymentstatus,
-      amount:req.body.amount,
+      foodid: x.foodid_id,
+      userid: x.userid,
+      count: x.count,
+      paymentstatus:false,
+      amount:x.foodid.price,
       date: date
       
     });
@@ -27,5 +28,6 @@ const addorder = (req, res) => {
           error: err,
         });
       });
+    })
   };
   module.exports={addorder}
