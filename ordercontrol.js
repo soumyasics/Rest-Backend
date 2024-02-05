@@ -21,11 +21,7 @@ const addorder = (req, res) => {
         });
       })
       .catch((err) => {
-        res.json({
-          status: 500,
-          msg: "Server Error",
-          error: err,
-        });
+        console.log("err on saving order",err);
       });
   });
 
