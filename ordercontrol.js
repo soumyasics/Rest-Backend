@@ -28,7 +28,7 @@ const addorder = (req, res) => {
         });
       });
   });
-  // console.log(req.body.state);
+
 };
 
 module.exports = { addorder };
