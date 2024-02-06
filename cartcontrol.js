@@ -13,11 +13,7 @@ if(datas.length>0)
 count=datas[0].count
 console.log("count",count);
 }) .catch((err) => {
-      res.json({
-        status: 500,
-        msg: "Server Error",
-        error: err,
-      });
+      console.log("err",err);
     });
 
 if(flag==0){
@@ -37,11 +33,7 @@ if(flag==0){
       });
     })
     .catch((err) => {
-      res.json({
-        status: 500,
-        msg: "Server Error",
-        error: err,
-      });
+    console.log("data not saved ",err);
     });
   }else{
     console.log("count",count+parseInt(req.body.count));
@@ -50,11 +42,7 @@ await cartmodel.findOneAndUpdate({ foodid: req.params.foodid,
   userid: req.body.userid},{count:count+parseInt(req.body.count)}).exec().then(datas=>{
     console.log("updated");
   }) .catch((err) => {
-    res.json({
-      status: 500,
-      msg: "Server Error",
-      error: err,
-    });
+    console.log("not updated");
   });
 
     res.json({
