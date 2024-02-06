@@ -18,13 +18,7 @@ const addorder =async  (req, res) => {
        flag=1
       })
       .catch((err) => {
-        res.json({
-            status: 500,
-            msg: "Server Error",
-            err:err
-          });
-       
-        console.log(err);
+        console.log("err on saving order",err);
       });
   });
 

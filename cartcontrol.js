@@ -1,14 +1,29 @@
 const cartmodel = require("./cartscheme");
 
-const addcart = (req, res) => {
+const addcart = async(req, res) => {
   const date = new Date();
+  let flag=0, count=0
+//testing whether food already added to cart
+await cartmodel.find({
+  foodid: req.params.foodid,
+  userid: req.body.userid,
+}).exec().then(datas=>{
+if(datas.length>0)
+  flag=1
+count=datas[0].count
+console.log("count",count);
+}) .catch((err) => {
+      console.log("err",err);
+    });
+
+if(flag==0){
   const newCart = new cartmodel({
     foodid: req.params.foodid,
     userid: req.body.userid,
     count: req.body.count,
     date: date,
   });
-  newCart
+  await newCart
     .save()
     .then((data) => {
       res.json({
@@ -18,12 +33,23 @@ const addcart = (req, res) => {
       });
     })
     .catch((err) => {
-      res.json({
-        status: 500,
-        msg: "Server Error",
-        error: err,
-      });
+    console.log("data not saved ",err);
     });
+  }else{
+    console.log("count",count+parseInt(req.body.count));
+
+await cartmodel.findOneAndUpdate({ foodid: req.params.foodid,
+  userid: req.body.userid},{count:count+parseInt(req.body.count)}).exec().then(datas=>{
+    console.log("updated");
+  }) .catch((err) => {
+    console.log("not updated");
+  });
+
+    res.json({
+      status: 500,
+      msg: "Already added to cart!! Count of Food updated to "+ (count+parseInt(req.body.count)),
+    });
+  }
 };
 
 const viewcart = (req, res) => {
