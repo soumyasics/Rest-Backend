@@ -1,6 +1,7 @@
 const ordermodel = require("./orderscheme");
 
-const addorder = (req, res) => {
+const addorder =async  (req, res) => {
+    let flag=0
   req.body.state.map((x) => {
     const date = new Date();
     const newOrder = new ordermodel({
@@ -14,20 +15,26 @@ const addorder = (req, res) => {
     newOrder
       .save()
       .then((data) => {
-        res.json({
-          status: 200,
-          msg: "Added Successfully",
-          result: data,
-        });
+       flag=1
       })
       .catch((err) => {
         res.json({
-          status: 500,
-          msg: "Server Error",
-          error: err,
-        });
+            status: 500,
+            msg: "Server Error",
+            err:err
+          });
+       
+        console.log(err);
       });
   });
+
+  res.json({
+    status: 200,
+    msg: "Added Successfully",
+  });
+ 
+
+  
   // console.log(req.body.state);
 };
 
