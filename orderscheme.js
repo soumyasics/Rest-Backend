@@ -11,7 +11,8 @@ const orderscheme = mongoose.Schema({
         ref:"newusers",
     },
     paymentstatus:{
-        type:Boolean
+        type:Boolean,
+        required:false,
     },
     amount:{
         type:Number,
