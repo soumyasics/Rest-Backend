@@ -12,6 +12,9 @@ const foodscheme=mongoose.Schema({
         type:Number,
         required:true
     },
+    amount:{
+        type:Number,
+    },
     descripition:{
         type:String,
         required:true

@@ -1,12 +1,12 @@
-const cartmodel = require("./cartscheme");
+const staffcartmodel = require("./staffcartscheme");
 
-const addcart = async(req, res) => {
+const staffaddcart = async(req, res) => {
   const date = new Date();
   let flag=0, count=0
 //testing whether food already added to cart
-await cartmodel.find({
+await staffcartmodel.find({
   foodid: req.params.foodid,
-  userid: req.body.userid,
+  staffid: req.body.staffid,
 }).exec().then(datas=>{
 if(datas.length>0){
   flag=1}
@@ -17,13 +17,13 @@ console.log("count",count);
     });
 
 if(flag==0){
-  const newCart = new cartmodel({
+  const newStaffcart = new staffcartmodel({
     foodid: req.params.foodid,
-    userid: req.body.userid,
+    staffid: req.body.staffid,
     count: req.body.count,
     date: date,
   });
-  await newCart
+  await newStaffcart
     .save()
     .then((data) => {
       res.json({
@@ -38,8 +38,8 @@ if(flag==0){
   }else{
     console.log("count",count+parseInt(req.body.count));
 
-await cartmodel.findOneAndUpdate({ foodid: req.params.foodid,
-  userid: req.body.userid},{count:count+parseInt(req.body.count)}).exec().then(datas=>{
+await staffcartmodel.findOneAndUpdate({ foodid: req.params.foodid,
+  staffid: req.body.staffid},{count:count+parseInt(req.body.count)}).exec().then(datas=>{
     console.log("updated");
   }) .catch((err) => {
     console.log("not updated");
@@ -52,9 +52,9 @@ await cartmodel.findOneAndUpdate({ foodid: req.params.foodid,
   }
 };
 
-const viewcart = (req, res) => {
-  cartmodel
-    .find({userid: req.params.userid}).populate("foodid")
+const staffviewcart = (req, res) => {
+  staffcartmodel
+    .find({staffid: req.params.staffid}).populate("foodid")
     .exec()
     .then((data) => {
       res.json({
@@ -72,9 +72,29 @@ const viewcart = (req, res) => {
     });
 };
 
-const deletecartitem = (req, res) => {
-  cartmodel
+const staffdeletecartitem = (req, res) => {
+  staffcartmodel
     .findByIdAndDelete({ _id: req.params.id })
+    .exec()
+    .then((data) => {
+      res.json({
+        status: 200,
+        msg: "data deleted",
+        result: data,
+      });
+    })
+    .catch((err) => {
+      res.json({
+        status: 500,
+        msg: "Server error",
+        error: err,
+      });
+    });
+};
+
+const staffdeletecart= (req, res) => {
+  staffcartmodel
+    .deleteMany({ staffid: req.params.staffid })
     .exec()
     .then((data) => {
       res.json({
@@ -92,24 +112,4 @@ const deletecartitem = (req, res) => {
     });
 };
 
-const deletecart= (req, res) => {
-  cartmodel
-    .deleteMany({ userid: req.params.userid })
-    .exec()
-    .then((data) => {
-      res.json({
-        status: 200,
-        msg: "Data Deleted",
-        result: data,
-      });
-    })
-    .catch((err) => {
-      res.json({
-        status: 500,
-        msg: "Server error",
-        error: err,
-      });
-    });
-};
-
-module.exports = { addcart,viewcart,deletecartitem,deletecart };
+module.exports = { staffaddcart, staffviewcart,staffdeletecartitem,staffdeletecart };
