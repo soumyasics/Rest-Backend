@@ -104,4 +104,23 @@ const vieworderdetails = (req,res) => {
   });
 }
 
-module.exports = { addorder, vieworder,cancelorder,paymentstatus,vieworderdetails };
+const viewcustomerorder = (req,res) => {
+  ordermodel.find({paymentstatus: "true"}).populate("userid").populate("foodid")
+  .exec()
+  .then((data) => {
+    res.json({
+      status: 200,
+      msg: "Viewed Successfully",
+      result: data,
+    });
+  })
+  .catch((err) => {
+    res.json({
+      status: 500,
+      msg: "Not Viewed",
+      error: err,
+    });
+  });
+}
+
+module.exports = { addorder, vieworder,cancelorder,paymentstatus,vieworderdetails,viewcustomerorder };

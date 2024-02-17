@@ -1,5 +1,9 @@
 const mongoose = require("mongoose")
 const stafforderscheme = mongoose.Schema({
+    customername:{
+        type:String,
+        required:true,
+    },
     foodid:{
         type:mongoose.Schema.Types.ObjectId,
         required:true,
@@ -9,14 +13,6 @@ const stafforderscheme = mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         required:true,
         ref:"newstaffs",
-    },
-    paymentstatus:{
-        type:Boolean,
-        required:false,
-    },
-    amount:{
-        type:Number,
-        required:true,
     },
     count:{
         type:Number,

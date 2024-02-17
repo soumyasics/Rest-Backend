@@ -2,14 +2,13 @@ const staffordermodel = require("./stafforderscheme");
 
 const staffaddorder = (req, res) => {
   req.body.state.map((x) => {
-    const date = new Date();
     const newStafforder = new staffordermodel({
       foodid: x.foodid._id,
       staffid: x.staffid,
-      paymentstatus: false,
       amount: x.foodid.price,
       count: x.count,
-      date: date,
+      customername:req.params.customername,
+      date: x.date,
     });
     newStafforder
       .save()
@@ -24,8 +23,46 @@ const staffaddorder = (req, res) => {
     })
     res.json({
       status: 200,
-      msg: "Added Successfully",
-    });
+      msg: "Ordered Successfully",
+    }); 
 };
 
-module.exports = {staffaddorder}
+const stafforderdetails = (req,res) => {
+  staffordermodel.find({staffid: req.params.staffid}).populate("foodid")
+  .exec()
+  .then((data) => {
+    res.json({
+      status: 200,
+      msg: "Viewed Successfully",
+      result: data,
+    });
+  })
+  .catch((err) => {
+    res.json({
+      status: 500,
+      msg: "Not Viewed",
+      error: err,
+    });
+  });
+}
+
+const viewallstafforder = (req,res) => {
+  staffordermodel.find().populate("staffid").populate("foodid")
+  .exec()
+  .then((data) => {
+    res.json({
+      status: 200,
+      msg: "Viewed Successfully",
+      result: data,
+    });
+  })
+  .catch((err) => {
+    res.json({
+      status: 500,
+      msg: "Not Viewed",
+      error: err,
+    });
+  });
+}
+
+module.exports = {staffaddorder, stafforderdetails, viewallstafforder}

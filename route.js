@@ -29,7 +29,10 @@ router.post('/paymentstatus',ordercontrol.paymentstatus)
 router.get('/vieworderdetails/:userid',ordercontrol.vieworderdetails)
 router.post('/staffaddcart/:foodid',staffcartcontrol.staffaddcart)
 router.get('/staffviewcart/:staffid',staffcartcontrol.staffviewcart)
+router.get('/viewcustomerorder',ordercontrol.viewcustomerorder)
 router.post('/staffdeletecartitem/:id',staffcartcontrol.staffdeletecartitem)
-router.post('/staffaddorder',staffordercontrol.staffaddorder)
+router.post('/staffaddorder/:customername',staffordercontrol.staffaddorder)
+router.get('/stafforderdetails/:staffid',staffordercontrol.stafforderdetails)
+router.get('/viewstafforders',staffordercontrol.viewallstafforder)
 
 module.exports=router
