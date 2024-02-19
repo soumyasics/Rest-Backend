@@ -17,6 +17,7 @@ const addfood = (req, res) => {
     foodname: req.body.foodname,
     image: req.file.filename,
     price: req.body.price,
+    amount: req.body.amount,
     descripition: req.body.descripition,
   });
   newFood
@@ -57,9 +58,57 @@ const viewfood = (req, res) => {
     });
 };
 
+const viewone = (req,res) => {
+  foodmodel
+    .findById({ _id: req.params.id })
+    .exec()
+    .then((data) => {
+      res.json({
+        status: 200,
+        msg: "success",
+        data: data,
+      });
+    })
+    .catch((err) => {
+      res.json({
+        status: 500,
+        msg: "error",
+        data: err,
+      });
+    });
+}
+
+const editfood = (req,res) => {
+  foodmodel.findByIdAndUpdate(
+    {
+      _id: req.params.id,
+    },
+    {
+      foodname: req.body.foodname,
+      image: req.file,
+      price: req.body.price,
+      descripition: req.body.descripition,
+    }
+  )
+  .exec()
+  .then((data) => {
+    res.status(200).json({
+      status: 200,
+      data: data,
+    });
+  })
+  .catch((err) => {
+    console.log(err);
+    res.status(500).json({
+      status: 500,
+      data: err,
+    });
+  });
+}
+
 const deletefood = (req, res) => {
   foodmodel
-    .deleteOne({ id: req.body.id })
+    .findByIdAndDelete({ _id: req.params.id })
     .exec()
     .then((data) => {
       res.json({
@@ -77,4 +126,4 @@ const deletefood = (req, res) => {
     });
 };
 
-module.exports = { addfood, viewfood, upload, deletefood,};
+module.exports = { addfood, viewfood, upload, deletefood, viewone, editfood};

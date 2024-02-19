@@ -8,8 +8,8 @@ await cartmodel.find({
   foodid: req.params.foodid,
   userid: req.body.userid,
 }).exec().then(datas=>{
-if(datas.length>0)
-  flag=1
+if(datas.length>0){
+  flag=1}
 count=datas[0].count
 console.log("count",count);
 }) .catch((err) => {
@@ -86,7 +86,27 @@ const viewcart = (req, res) => {
 
 const deletecartitem = (req, res) => {
   cartmodel
-    .deleteOne({ id: req.body.id })
+    .findByIdAndDelete({ _id: req.params.id })
+    .exec()
+    .then((data) => {
+      res.json({
+        status: 200,
+        msg: "Order Confirmed",
+        result: data,
+      });
+    })
+    .catch((err) => {
+      res.json({
+        status: 500,
+        msg: "Server error",
+        error: err,
+      });
+    });
+};
+
+const deletecart= (req, res) => {
+  cartmodel
+    .deleteMany({ userid: req.params.userid })
     .exec()
     .then((data) => {
       res.json({
@@ -104,4 +124,4 @@ const deletecartitem = (req, res) => {
     });
 };
 
-module.exports = { addcart,viewcart,deletecartitem };
+module.exports = { addcart,viewcart,deletecartitem,deletecart };
